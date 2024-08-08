@@ -1,18 +1,22 @@
-package service;
+package utils;
 
-import Exception.WrongLoginException;
-import Exception.WrongPasswordException;
+import exception.WrongLoginException;
+import exception.WrongPasswordException;
+
+import java.util.regex.Pattern;
 
 
-public class UserValidate {
+public class ValidateUtils {
+    private static final Pattern PATTERN =
+            Pattern.compile("\\w{1,20}");
 
     public static void validateUser(String login, String password, String confirmPassword) {
-        if (!login.matches("[a-zA-Z0-9_]+") || login.length() > 20) {
+        if (!PATTERN.matcher(login).matches()) {
             throw new WrongLoginException("Login должен содержать только латинские буквы," +
                     " цифры и знак подчеркивания," +
                     " и не превышать 20 символов.");
         }
-        if (!password.matches("[a-zA-Z0-9_]+") || password.length() > 20) {
+        if (!PATTERN.matcher(password).matches()) {
             throw new WrongPasswordException("Password должен содержать только латинские буквы," +
                     " цифры и знак подчеркивания," +
                     " и не превышать 20 символов.");
